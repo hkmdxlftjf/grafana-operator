@@ -352,6 +352,7 @@ func getInstallationStages() []grafanav1beta1.OperatorStageName {
 		grafanav1beta1.OperatorStageServiceAccount,
 		grafanav1beta1.OperatorStageService,
 		grafanav1beta1.OperatorStageIngress,
+		grafanav1beta1.OperatorStageHttpRoute,
 		grafanav1beta1.OperatorStagePlugins,
 		grafanav1beta1.OperatorStageDeployment,
 		grafanav1beta1.OperatorStageComplete,
@@ -367,6 +368,8 @@ func (r *GrafanaReconciler) getReconcilerForStage(stage grafanav1beta1.OperatorS
 	case grafanav1beta1.OperatorStagePvc:
 		return grafana.NewPvcReconciler(r.Client)
 	case grafanav1beta1.OperatorStageServiceAccount:
+		return grafana.NewServiceAccountReconciler(r.Client)
+	case grafanav1beta1.OperatorStageHttpRoute:
 		return grafana.NewServiceAccountReconciler(r.Client)
 	case grafanav1beta1.OperatorStageService:
 		return grafana.NewServiceReconciler(r.Client, r.ClusterDomain)
